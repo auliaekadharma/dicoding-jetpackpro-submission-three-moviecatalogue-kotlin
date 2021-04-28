@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Movie Catalogue</string>
+    <string name="title_activity_detail_movie">Detail Movie</string>
+
+    <string name="title">Title</string>
+    <string name="release_year">Release Year</string>
+    <string name="description">Description</string>
+    <string name="description_content">Description Content</string>
+
+    <string name="title_activity_detail_tvshow">Detail Tv Show</string>
+    <string name="share_text">Bagikan Film %s </string>
+
+    <string name="movie">Movies</string>
+    <string name="tvshow">TV Shows</string>
+    <string name="release_date">Release Date</string>
+    <string name="genre">Genre</string>
+    <string name="duration">Duration</string>
+</resources>

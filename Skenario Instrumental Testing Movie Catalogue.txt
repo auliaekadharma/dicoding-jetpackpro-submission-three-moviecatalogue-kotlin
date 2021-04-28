@@ -1,0 +1,34 @@
+Skenario Instrumental Testing Movie Catalogue
+
+Menampilkan data movies
+ - Simulasi delay 2 detik
+ - Memastikan rv_movie dalam keadaan tampil.
+ - Scroll rv_movie ke posisi data terakhir.
+
+Menampilkan data detail movie
+ - Simulasi delay 2 detik
+ - Simulasi delay 2 detik (loading online image)
+ - Memberi tindakan klik pada data pertama di rv_movie.
+ - Simulasi delay 2 detik
+ - Memastikan TextView untuk title tampil sesuai dengan yang diharapkan.
+ - Memastikan TextView untuk year tampil sesuai dengan yang diharapkan.
+ - Memastikan TextView untuk release date tampil sesuai dengan yang diharapkan.
+ - Memastikan TextView untuk genres tampil sesuai dengan yang diharapkan.
+ - Memastikan TextView untuk duration tampil sesuai dengan yang diharapkan.
+ - Memastikan TextView untuk description tampil sesuai dengan yang diharapkan.
+
+Menampilkan data tv shows
+ - Simulasi delay 2 detik
+ - Klik TabLayout dengan teks TV Shows
+ - Memastikan rv_tvshow dalam keadaan tampil.
+ - Scroll rv_tvshow ke posisi data terakhir.
+
+Menampilkan data detail tv show
+ - Simulasi delay 2 detik
+ - Klik TabLayout dengan teks TV Shows
+ - Memberi tindakan klik pada data pertama di rv_tvshow.
+ - Memastikan TextView untuk title tampil sesuai dengan yang diharapkan.
+ - Memastikan TextView untuk year tampil sesuai dengan yang diharapkan.
+ - Memastikan TextView untuk genres tampil sesuai dengan yang diharapkan.
+ - Memastikan TextView untuk duration tampil sesuai dengan yang diharapkan.
+ - Memastikan TextView untuk description tampil sesuai dengan yang diharapkan.
