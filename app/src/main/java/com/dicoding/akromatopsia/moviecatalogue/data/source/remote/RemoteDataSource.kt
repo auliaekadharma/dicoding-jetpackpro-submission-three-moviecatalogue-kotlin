@@ -1,6 +1,10 @@
 package com.dicoding.akromatopsia.moviecatalogue.data.source.remote
 
+import android.graphics.Movie
 import android.os.Handler
+import android.os.Looper
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.dicoding.akromatopsia.moviecatalogue.data.source.remote.response.MovieResponse
 import com.dicoding.akromatopsia.moviecatalogue.data.source.remote.response.TvshowResponse
 import com.dicoding.akromatopsia.moviecatalogue.utils.EspressoIdlingResources
@@ -8,7 +12,7 @@ import com.dicoding.akromatopsia.moviecatalogue.utils.JsonHelper
 
 class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
 
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
 
     companion object {
         private const val SERVICE_LATENCY_IN_MILLIS: Long = 2000
@@ -18,31 +22,35 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
 
         fun getInstance(helper: JsonHelper): RemoteDataSource =
             instance ?: synchronized(this) {
-                instance ?: RemoteDataSource(helper)
+                RemoteDataSource(helper).apply { instance = this }
             }
     }
 
-    fun getAllMovies(callback: LoadMoviesCallback) {
+    fun getAllMovies(): LiveData<ApiResponse<List<MovieResponse>>> {
         EspressoIdlingResources.increment()
+        val resultMovie = MutableLiveData<ApiResponse<List<MovieResponse>>>()
         handler.postDelayed({
-            callback.onAllMoviesReceived(jsonHelper.loadMovies())
+            resultMovie.value = ApiResponse.success(jsonHelper.loadMovies())
             EspressoIdlingResources.decrement()
                             }, SERVICE_LATENCY_IN_MILLIS)
+        return resultMovie
     }
 
-    fun getAllTvshows(callback: LoadTvshowsCallback) {
+    fun getAllTvshows(): LiveData<ApiResponse<List<TvshowResponse>>> {
         EspressoIdlingResources.increment()
+        val resultTvshow = MutableLiveData<ApiResponse<List<TvshowResponse>>>()
         handler.postDelayed({
-            callback.onAllTvshowsReceived(jsonHelper.loadTvshows())
+            resultTvshow.value = ApiResponse.success(jsonHelper.loadTvshows())
             EspressoIdlingResources.decrement()
                             }, SERVICE_LATENCY_IN_MILLIS)
+        return resultTvshow
     }
 
-    interface LoadMoviesCallback {
-        fun onAllMoviesReceived(movieResponses: List<MovieResponse>)
-    }
-
-    interface LoadTvshowsCallback {
-        fun onAllTvshowsReceived(tvshowResponses: List<TvshowResponse>)
-    }
+//    interface LoadMoviesCallback {
+//        fun onAllMoviesReceived(movieResponses: List<MovieResponse>)
+//    }
+//
+//    interface LoadTvshowsCallback {
+//        fun onAllTvshowsReceived(tvshowResponses: List<TvshowResponse>)
+//    }
 }

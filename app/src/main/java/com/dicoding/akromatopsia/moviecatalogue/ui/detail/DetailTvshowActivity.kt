@@ -1,8 +1,8 @@
 package com.dicoding.akromatopsia.moviecatalogue.ui.detail
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -40,15 +40,12 @@ class DetailTvshowActivity : AppCompatActivity() {
             val tvshowId = extras.getString(EXTRA_TVSHOW)
 
             if (tvshowId != null) {
-                activityDetailTvshowBinding.progressBar.visibility = View.VISIBLE
-
                 viewModel.setSelectedTvshow(tvshowId)
 
-                viewModel.getTvshow().observe(this, { tvshow: List<TvshowEntity> ->
-                    activityDetailTvshowBinding.progressBar.visibility = View.GONE
-                    val id = tvshow.indexOfFirst{it.tvshowId == tvshowId}
-                    populateTvshow(tvshow[id])
-
+                viewModel.tvshow.observe(this, Observer {
+                    if (it != null) {
+                        populateTvshow(it)
+                    }
                 })
             }
         }

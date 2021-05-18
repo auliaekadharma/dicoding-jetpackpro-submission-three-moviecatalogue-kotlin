@@ -2,13 +2,15 @@ package com.dicoding.akromatopsia.moviecatalogue.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueDataSource
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.source.remote.RemoteDataSource
 import com.dicoding.akromatopsia.moviecatalogue.data.source.remote.response.MovieResponse
 import com.dicoding.akromatopsia.moviecatalogue.data.source.remote.response.TvshowResponse
 
-class FakeMovieCatalogueRepository (private val remoteDataSource: RemoteDataSource) : MovieCatalogueDataSource {
+class FakeMovieCatalogueRepository (private val remoteDataSource: RemoteDataSource) :
+    MovieCatalogueDataSource {
 
     override fun getAllMovies(): LiveData<List<MovieEntity>> {
         val movieResults = MutableLiveData<List<MovieEntity>>()

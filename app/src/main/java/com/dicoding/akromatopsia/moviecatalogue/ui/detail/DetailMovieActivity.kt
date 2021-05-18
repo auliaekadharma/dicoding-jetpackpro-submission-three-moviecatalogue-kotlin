@@ -3,6 +3,7 @@ package com.dicoding.akromatopsia.moviecatalogue.ui.detail
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -12,6 +13,8 @@ import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEn
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ActivityDetailMovieBinding
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ContentDetailMovieBinding
 import com.dicoding.akromatopsia.moviecatalogue.viewmodel.ViewModelFactory
+import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
+import com.dicoding.akromatopsia.moviecatalogue.vo.Status
 
 class DetailMovieActivity : AppCompatActivity() {
 
@@ -40,15 +43,14 @@ class DetailMovieActivity : AppCompatActivity() {
             val movieId = extras.getString(EXTRA_MOVIE)
 
             if (movieId != null) {
-                activityDetailMovieBinding.progressBar.visibility = View.VISIBLE
-
                 viewModel.setSelectedMovie(movieId)
 
-                viewModel.getMovie().observe(this, { movie: List<MovieEntity> ->
-                    activityDetailMovieBinding.progressBar.visibility = View.GONE
-                    val id = movie.indexOfFirst{it.movieId == movieId}
-                    populateMovie(movie[id])
+                viewModel.movie.observe(this, Observer {
+                    if (it != null) {
+                        populateMovie(it)
+                    }
                 })
+
             }
         }
     }

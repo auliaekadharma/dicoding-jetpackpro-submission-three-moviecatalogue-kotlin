@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
-import com.dicoding.akromatopsia.moviecatalogue.data.source.MovieCatalogueRepository
+import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
 import com.dicoding.akromatopsia.moviecatalogue.utils.DataDummy
 import org.junit.Assert.*
 import org.junit.Before

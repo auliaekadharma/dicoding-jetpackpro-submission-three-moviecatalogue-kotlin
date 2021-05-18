@@ -3,7 +3,7 @@ package com.dicoding.akromatopsia.moviecatalogue.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.akromatopsia.moviecatalogue.data.source.MovieCatalogueRepository
+import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
 import com.dicoding.akromatopsia.moviecatalogue.di.Injection
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailMovieViewModel
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailTvshowViewModel

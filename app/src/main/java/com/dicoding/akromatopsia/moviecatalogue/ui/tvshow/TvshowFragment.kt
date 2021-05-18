@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +13,7 @@ import com.dicoding.akromatopsia.moviecatalogue.R
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.databinding.FragmentTvshowBinding
 import com.dicoding.akromatopsia.moviecatalogue.viewmodel.ViewModelFactory
+import com.dicoding.akromatopsia.moviecatalogue.vo.Status
 
 class TvshowFragment : Fragment(), TvshowFragmentCallback {
 
@@ -35,19 +37,30 @@ class TvshowFragment : Fragment(), TvshowFragmentCallback {
             val viewModel = ViewModelProvider(this, factory)[TvshowViewModel::class.java]
 
             val tvshowAdapter = TvshowAdapter(this)
-
-            fragmentTvshowBinding.progressBar.visibility = View.VISIBLE
             viewModel.getTvshows().observe(viewLifecycleOwner, { tvshows ->
-                fragmentTvshowBinding.progressBar.visibility = View.GONE
-                tvshowAdapter.setTvshows(tvshows)
-                tvshowAdapter.notifyDataSetChanged()
+                if (tvshows != null) {
+                    when (tvshows.status) {
+                        Status.LOADING -> fragmentTvshowBinding.progressBar.visibility = View.VISIBLE
+                        Status.SUCCESS -> {
+                            fragmentTvshowBinding.progressBar.visibility = View.GONE
+                            tvshowAdapter.setTvshows(tvshows.data)
+                            tvshowAdapter.notifyDataSetChanged()
+                        }
+                        Status.ERROR -> {
+                            fragmentTvshowBinding.progressBar.visibility = View.GONE
+                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             })
 
             with(fragmentTvshowBinding.rvTvshow) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                this.adapter = tvshowAdapter
+                this?.layoutManager = LinearLayoutManager(context)
+                this?.setHasFixedSize(true)
+                this?.adapter = tvshowAdapter
             }
+
+
         }
     }
 

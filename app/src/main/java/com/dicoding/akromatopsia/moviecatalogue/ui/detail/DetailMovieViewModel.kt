@@ -1,28 +1,33 @@
 package com.dicoding.akromatopsia.moviecatalogue.ui.detail
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
-import com.dicoding.akromatopsia.moviecatalogue.data.source.MovieCatalogueRepository
+import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
+import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
 
 class DetailMovieViewModel (private val movieCatalogueRepository: MovieCatalogueRepository) : ViewModel() {
-    private lateinit var movieId: String
+    val movieId = MutableLiveData<String>()
 
-    fun setSelectedMovie(movieId: String) {
-        this.movieId = movieId
+    var movie: LiveData<MovieEntity> = Transformations.switchMap(movieId) {
+        movieCatalogueRepository.getMovie(it)
     }
 
-//    fun getMovie(): MovieEntity {
-//        lateinit var movie: MovieEntity
-//        val moviesEntities = movieCatalogueRepository.getAllMovies()
-//        for (movieEntity in moviesEntities) {
-//            if (movieEntity.movieId == movieId) {
-//                movie = movieEntity
-//            }
-//        }
-//        return movie
-//    }
+    fun setSelectedMovie(movieId: String) {
+        this.movieId.value = movieId
+    }
 
-    fun getMovie() : LiveData<List<MovieEntity>> = movieCatalogueRepository.getAllMovies()
+
+    fun setFavoriteMovie() {
+        val movieEntity = movie.value
+        if (movieEntity != null) {
+            val newState = !movieEntity.favorite
+            movieCatalogueRepository.setMovieFavorite(movieEntity, newState)
+        }
+    }
+
+    //fun getMovie() : LiveData<List<MovieEntity>> = movieCatalogueRepository.getAllMovies()
 
 }

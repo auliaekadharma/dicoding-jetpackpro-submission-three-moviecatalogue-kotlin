@@ -1,17 +1,24 @@
 package com.dicoding.akromatopsia.moviecatalogue.di
 
 import android.content.Context
-import com.dicoding.akromatopsia.moviecatalogue.data.source.MovieCatalogueRepository
+import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
+import com.dicoding.akromatopsia.moviecatalogue.data.source.local.LocalDataSource
+import com.dicoding.akromatopsia.moviecatalogue.data.source.local.room.MovieCatalogueDatabase
 import com.dicoding.akromatopsia.moviecatalogue.data.source.remote.RemoteDataSource
+import com.dicoding.akromatopsia.moviecatalogue.utils.AppExecutors
 import com.dicoding.akromatopsia.moviecatalogue.utils.JsonHelper
 
 object Injection {
 
     fun provideRepository(context: Context): MovieCatalogueRepository {
 
-        val remoteDataSource = RemoteDataSource.getInstance(JsonHelper(context))
+        val database = MovieCatalogueDatabase.getInstance(context)
 
-        return MovieCatalogueRepository.getInstance(remoteDataSource)
+        val remoteDataSource = RemoteDataSource.getInstance(JsonHelper(context))
+        val localDataSource = LocalDataSource.getInstance(database.movieCatalogueDao())
+        val appExecutors = AppExecutors()
+
+        return MovieCatalogueRepository.getInstance(remoteDataSource, localDataSource, appExecutors)
     }
 
 }
