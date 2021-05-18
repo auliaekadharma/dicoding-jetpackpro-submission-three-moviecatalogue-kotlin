@@ -15,4 +15,7 @@
     <string name="release_date">Release Date</string>
     <string name="genre">Genre</string>
     <string name="duration">Duration</string>
+    <string name="nav_movies">Movies</string>
+    <string name="nav_tv_shows">Tv Shows</string>
+    <string name="nav_favorites">Favorites</string>
 </resources>
