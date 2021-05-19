@@ -7,6 +7,8 @@ import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
 import com.dicoding.akromatopsia.moviecatalogue.di.Injection
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailMovieViewModel
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailTvshowViewModel
+import com.dicoding.akromatopsia.moviecatalogue.ui.favorite.movie.FavoriteMovieViewModel
+import com.dicoding.akromatopsia.moviecatalogue.ui.favorite.tvshow.FavoriteTvshowViewModel
 import com.dicoding.akromatopsia.moviecatalogue.ui.movie.MovieViewModel
 import com.dicoding.akromatopsia.moviecatalogue.ui.tvshow.TvshowViewModel
 
@@ -36,6 +38,12 @@ class ViewModelFactory private constructor(private val mMovieCatalogueRepository
             }
             modelClass.isAssignableFrom(DetailTvshowViewModel::class.java) -> {
                 return DetailTvshowViewModel(mMovieCatalogueRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteMovieViewModel::class.java) -> {
+                return FavoriteMovieViewModel(mMovieCatalogueRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteTvshowViewModel::class.java) -> {
+                return FavoriteTvshowViewModel(mMovieCatalogueRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

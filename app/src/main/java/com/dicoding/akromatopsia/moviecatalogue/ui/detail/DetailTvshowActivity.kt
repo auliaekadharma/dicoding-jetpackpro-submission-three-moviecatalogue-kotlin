@@ -1,7 +1,10 @@
 package com.dicoding.akromatopsia.moviecatalogue.ui.detail
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -15,7 +18,11 @@ import com.dicoding.akromatopsia.moviecatalogue.viewmodel.ViewModelFactory
 
 class DetailTvshowActivity : AppCompatActivity() {
 
+    private lateinit var activityDetailTvshowBinding: ActivityDetailTvshowBinding
     private lateinit var detailContentBinding: ContentDetailTvshowBinding
+
+    private lateinit var viewModel: DetailTvshowViewModel
+    private var menu: Menu? = null
 
     companion object {
         const val EXTRA_TVSHOW = "extra_tvshow"
@@ -24,7 +31,7 @@ class DetailTvshowActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val activityDetailTvshowBinding = ActivityDetailTvshowBinding.inflate(layoutInflater)
+        activityDetailTvshowBinding = ActivityDetailTvshowBinding.inflate(layoutInflater)
         detailContentBinding = activityDetailTvshowBinding.detailContent
 
         setContentView(activityDetailTvshowBinding.root)
@@ -33,7 +40,7 @@ class DetailTvshowActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val factory = ViewModelFactory.getInstance(this)
-        val viewModel = ViewModelProvider(this, factory)[DetailTvshowViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[DetailTvshowViewModel::class.java]
 
         val extras = intent.extras
         if (extras != null) {
@@ -65,5 +72,38 @@ class DetailTvshowActivity : AppCompatActivity() {
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error))
                 .into(detailContentBinding.imagePoster)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        this.menu = menu
+        viewModel.tvshow.observe(this, Observer {
+            if (it != null) {
+                val state = it.favorite
+                setFavoriteState(state)
+            }
+        })
+
+        return true
+    }
+
+    private fun setFavoriteState(state: Boolean) {
+        if (menu == null) return
+
+        val menuItem = menu?.findItem(R.id.action_favorite)
+
+        if (state) {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled)
+        } else {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_favorite) {
+            viewModel.setFavoriteTvshow()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
