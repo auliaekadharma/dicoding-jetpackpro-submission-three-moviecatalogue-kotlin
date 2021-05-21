@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
 import com.dicoding.akromatopsia.moviecatalogue.utils.DataDummy
+import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -28,7 +29,7 @@ class TvshowViewModelTest {
     private lateinit var movieCatalogueRepository: MovieCatalogueRepository
 
     @Mock
-    private lateinit var observer: Observer<List<TvshowEntity>>
+    private lateinit var observer: Observer<Resource<List<TvshowEntity>>>
 
     @Before
     fun setUp() {
@@ -37,12 +38,12 @@ class TvshowViewModelTest {
 
     @Test
     fun getTvshows() {
-        val dummyTvshows = DataDummy.generateDummyTvshow()
-        val tvshows = MutableLiveData<List<TvshowEntity>>()
+        val dummyTvshows = Resource.success(DataDummy.generateDummyTvshow())
+        val tvshows = MutableLiveData<Resource<List<TvshowEntity>>>()
         tvshows.value = dummyTvshows
 
         Mockito.`when`(movieCatalogueRepository.getAllTvshows()).thenReturn(tvshows)
-        val tvshowEntities = viewModel.getTvshows().value
+        val tvshowEntities = viewModel.getTvshows().value?.data
         verify(movieCatalogueRepository).getAllTvshows()
         Assert.assertNotNull(tvshowEntities)
         Assert.assertEquals(10, tvshowEntities?.size)

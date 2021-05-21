@@ -15,6 +15,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -24,7 +25,6 @@ class DetailTvshowViewModelTest {
     private val dummyTvshow = DataDummy.generateDummyTvshow()[0]
     private val tvshowId = dummyTvshow.tvshowId
 
-
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -32,7 +32,7 @@ class DetailTvshowViewModelTest {
     private lateinit var movieCatalogueRepository: MovieCatalogueRepository
 
     @Mock
-    private lateinit var tvshowObserver: Observer<List<TvshowEntity>>
+    private lateinit var observer: Observer<TvshowEntity>
 
     @Before
     fun setUp() {
@@ -43,23 +43,14 @@ class DetailTvshowViewModelTest {
 
     @Test
     fun getTvshow() {
-        val tvshow = MutableLiveData<List<TvshowEntity>>()
-        tvshow.value = listOf(dummyTvshow)
+        val tvshow = MutableLiveData<TvshowEntity>()
+        tvshow.value = dummyTvshow
 
-        `when`(movieCatalogueRepository.getAllTvshows()).thenReturn(tvshow)
-        val tvshowEntity = viewModel.getTvshow().value
-        Mockito.verify(movieCatalogueRepository).getAllTvshows()
+        `when`(movieCatalogueRepository.getTvshow(tvshowId)).thenReturn(tvshow)
 
-        assertNotNull(tvshowEntity)
-        assertEquals(dummyTvshow.tvshowId, tvshowEntity?.get(0)?.tvshowId)
-        assertEquals(dummyTvshow.year, tvshowEntity?.get(0)?.year)
-        assertEquals(dummyTvshow.genres, tvshowEntity?.get(0)?.genres)
-        assertEquals(dummyTvshow.duration, tvshowEntity?.get(0)?.duration)
-        assertEquals(dummyTvshow.description, tvshowEntity?.get(0)?.description)
-        assertEquals(dummyTvshow.poster, tvshowEntity?.get(0)?.poster)
-        assertEquals(dummyTvshow.title, tvshowEntity?.get(0)?.title)
+        viewModel.tvshow.observeForever(observer)
 
-        viewModel.getTvshow().observeForever(tvshowObserver)
-        Mockito.verify(tvshowObserver).onChanged(listOf(dummyTvshow))
+        verify(observer).onChanged(dummyTvshow)
+
     }
 }

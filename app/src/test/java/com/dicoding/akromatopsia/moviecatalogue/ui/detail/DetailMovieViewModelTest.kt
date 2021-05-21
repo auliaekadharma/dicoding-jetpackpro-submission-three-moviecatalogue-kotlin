@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
 import com.dicoding.akromatopsia.moviecatalogue.utils.DataDummy
+import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -31,7 +32,7 @@ class DetailMovieViewModelTest {
     private lateinit var movieCatalogueRepository: MovieCatalogueRepository
 
     @Mock
-    private lateinit var movieObserver: Observer<List<MovieEntity>>
+    private lateinit var observer: Observer<MovieEntity>
 
     @Before
     fun setUp() {
@@ -41,24 +42,14 @@ class DetailMovieViewModelTest {
 
     @Test
     fun getMovie() {
-        val movie = MutableLiveData<List<MovieEntity>>()
-        movie.value = listOf(dummyMovie)
+        val movie = MutableLiveData<MovieEntity>()
+        movie.value = dummyMovie
 
-        `when`(movieCatalogueRepository.getAllMovies()).thenReturn(movie)
-        val movieEntity = viewModel.getMovie().value
-        verify(movieCatalogueRepository).getAllMovies()
+        `when`(movieCatalogueRepository.getMovie(movieId)).thenReturn(movie)
 
-        assertNotNull(movieEntity)
-        assertEquals(dummyMovie.movieId, movieEntity?.get(0)?.movieId)
-        assertEquals(dummyMovie.year, movieEntity?.get(0)?.year)
-        assertEquals(dummyMovie.releaseDate, movieEntity?.get(0)?.releaseDate)
-        assertEquals(dummyMovie.genres, movieEntity?.get(0)?.genres)
-        assertEquals(dummyMovie.duration, movieEntity?.get(0)?.duration)
-        assertEquals(dummyMovie.description, movieEntity?.get(0)?.description)
-        assertEquals(dummyMovie.poster, movieEntity?.get(0)?.poster)
-        assertEquals(dummyMovie.title, movieEntity?.get(0)?.title)
+        viewModel.movie.observeForever(observer)
 
-        viewModel.getMovie().observeForever(movieObserver)
-        verify(movieObserver).onChanged(listOf(dummyMovie))
+        verify(observer).onChanged(dummyMovie)
+
     }
 }
