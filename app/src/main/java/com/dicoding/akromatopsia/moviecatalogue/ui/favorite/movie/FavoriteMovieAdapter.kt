@@ -3,6 +3,8 @@ package com.dicoding.akromatopsia.moviecatalogue.ui.favorite.movie
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -11,15 +13,29 @@ import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEn
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ItemsMovieBinding
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailMovieActivity
 
-class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieViewHolder>(){
+//class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieViewHolder>(){
+class FavoriteMovieAdapter : PagedListAdapter<MovieEntity, FavoriteMovieAdapter.FavoriteMovieViewHolder>(DIFF_CALLBACK){
 
-    private var listMovies = ArrayList<MovieEntity>()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
+            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem.movieId == newItem.movieId
 
-    fun setMovies(movies: List<MovieEntity>?) {
-        if (movies == null) return
-        this.listMovies.clear()
-        this.listMovies.addAll(movies)
+            }
+
+            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
+
+//    private var listMovies = ArrayList<MovieEntity>()
+//
+//    fun setMovies(movies: List<MovieEntity>?) {
+//        if (movies == null) return
+//        this.listMovies.clear()
+//        this.listMovies.addAll(movies)
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMovieViewHolder {
         val itemsMovieBinding = ItemsMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,13 +43,19 @@ class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteM
     }
 
     override fun onBindViewHolder(holder: FavoriteMovieViewHolder, position: Int) {
-        val movie = listMovies[position]
-        holder.bind(movie)
+//        val movie = listMovies[position]
+//        holder.bind(movie)
+        val movie = getItem(position)
+        if (movie != null) {
+            holder.bind(movie)
+        }
     }
 
-    override fun getItemCount(): Int = listMovies.size
+//    override fun getItemCount(): Int = listMovies.size
 
-    inner class FavoriteMovieViewHolder(private val binding: ItemsMovieBinding) :  RecyclerView.ViewHolder(binding.root) {
+    fun getSwipeData(swipedPosition: Int): MovieEntity? = getItem(swipedPosition)
+
+    class FavoriteMovieViewHolder(private val binding: ItemsMovieBinding) :  RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieEntity) {
             with(binding) {
                 tvItemTitle.text = movie.title

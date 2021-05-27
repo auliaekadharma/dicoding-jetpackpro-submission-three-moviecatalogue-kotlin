@@ -41,10 +41,11 @@ class FavoriteMovieFragment : Fragment() {
 
             fragmentFavoriteMovieBinding.progressBar.visibility = View.VISIBLE
 
-            viewModel.getFavoriteMovies().observe(viewLifecycleOwner, Observer {
+            viewModel.getFavoriteMovies().observe(viewLifecycleOwner, { movies ->
                 fragmentFavoriteMovieBinding.progressBar.visibility = View.GONE
-                favMovieAdapter.setMovies(it)
-                favMovieAdapter.notifyDataSetChanged()
+//                favMovieAdapter.setMovies(movies)
+//                favMovieAdapter.notifyDataSetChanged()
+                favMovieAdapter.submitList(movies)
             })
 
             with(fragmentFavoriteMovieBinding.rvFavMovie) {

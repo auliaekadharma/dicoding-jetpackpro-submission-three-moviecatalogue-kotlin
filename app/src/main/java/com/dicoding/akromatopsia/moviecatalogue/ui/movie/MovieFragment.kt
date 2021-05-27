@@ -42,8 +42,9 @@ class MovieFragment : Fragment(), MovieFragmentCallback {
                         Status.LOADING -> fragmentMovieBinding.progressBar.visibility = View.VISIBLE
                         Status.SUCCESS -> {
                             fragmentMovieBinding.progressBar.visibility = View.GONE
-                            movieAdapter.setMovies(movies.data)
-                            movieAdapter.notifyDataSetChanged()
+//                            movieAdapter.setMovies(movies.data)
+//                            movieAdapter.notifyDataSetChanged()
+                            movieAdapter.submitList(movies.data)
                         }
                         Status.ERROR -> {
                             fragmentMovieBinding.progressBar.visibility = View.GONE

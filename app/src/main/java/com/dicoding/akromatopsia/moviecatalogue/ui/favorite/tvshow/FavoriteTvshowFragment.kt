@@ -1,18 +1,13 @@
 package com.dicoding.akromatopsia.moviecatalogue.ui.favorite.tvshow
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.akromatopsia.moviecatalogue.R
-import com.dicoding.akromatopsia.moviecatalogue.databinding.FragmentFavoriteMovieBinding
 import com.dicoding.akromatopsia.moviecatalogue.databinding.FragmentFavoriteTvshowBinding
-import com.dicoding.akromatopsia.moviecatalogue.ui.favorite.movie.FavoriteMovieAdapter
-import com.dicoding.akromatopsia.moviecatalogue.ui.favorite.movie.FavoriteMovieViewModel
 import com.dicoding.akromatopsia.moviecatalogue.viewmodel.ViewModelFactory
 
 class FavoriteTvshowFragment : Fragment() {
@@ -39,10 +34,11 @@ class FavoriteTvshowFragment : Fragment() {
 
             fragmentFavoriteTvshowBinding.progressBar.visibility = View.VISIBLE
 
-            viewModel.getFavoriteTvshows().observe(viewLifecycleOwner, Observer {
+            viewModel.getFavoriteTvshows().observe(viewLifecycleOwner, { tvshows ->
                 fragmentFavoriteTvshowBinding.progressBar.visibility = View.GONE
-                favTvshowAdapter.setTvshows(it)
-                favTvshowAdapter.notifyDataSetChanged()
+//                favTvshowAdapter.setTvshows(tvshows)
+//                favTvshowAdapter.notifyDataSetChanged()
+                favTvshowAdapter.submitList(tvshows)
             })
 
             with(fragmentFavoriteTvshowBinding.rvFavTvshow) {

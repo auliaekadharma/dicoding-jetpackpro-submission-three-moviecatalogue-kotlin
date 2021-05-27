@@ -1,6 +1,7 @@
 package com.dicoding.akromatopsia.moviecatalogue.data.source.local
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.room.MovieCatalogueDao
@@ -15,11 +16,11 @@ class LocalDataSource private constructor(private val mMovieCatalogueDao: MovieC
             INSTANCE ?: LocalDataSource(movieCatalogueDao)
     }
 
-    fun getAllMovies(): LiveData<List<MovieEntity>> = mMovieCatalogueDao.getMovies()
+    fun getAllMovies(): DataSource.Factory<Int, MovieEntity> = mMovieCatalogueDao.getMovies()
 
     fun getMovie(movieId: String): LiveData<MovieEntity> = mMovieCatalogueDao.getMovie(movieId)
 
-    fun getFavoriteMovies(): LiveData<List<MovieEntity>> = mMovieCatalogueDao.getFavoriteMovie()
+    fun getFavoriteMovies(): DataSource.Factory<Int, MovieEntity> = mMovieCatalogueDao.getFavoriteMovie()
 
     fun insertMovies(movies: List<MovieEntity>) = mMovieCatalogueDao.insertMovies(movies)
 
@@ -29,11 +30,11 @@ class LocalDataSource private constructor(private val mMovieCatalogueDao: MovieC
     }
 
 
-    fun getAllTvshows(): LiveData<List<TvshowEntity>> = mMovieCatalogueDao.getTvshows()
+    fun getAllTvshows(): DataSource.Factory<Int, TvshowEntity> = mMovieCatalogueDao.getTvshows()
 
     fun getTvshow(tvshowId: String): LiveData<TvshowEntity> = mMovieCatalogueDao.getTvshow(tvshowId)
 
-    fun getFavoriteTvshows(): LiveData<List<TvshowEntity>> = mMovieCatalogueDao.getFavoriteTvshow()
+    fun getFavoriteTvshows(): DataSource.Factory<Int, TvshowEntity> = mMovieCatalogueDao.getFavoriteTvshow()
 
     fun insertTvshows(tvshows: List<TvshowEntity>) = mMovieCatalogueDao.insertTvshows(tvshows)
 

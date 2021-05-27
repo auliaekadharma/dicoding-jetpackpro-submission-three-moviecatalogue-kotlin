@@ -4,23 +4,39 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dicoding.akromatopsia.moviecatalogue.R
+import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ItemsTvshowBinding
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailTvshowActivity
 
-class TvshowAdapter(private val callback: TvshowFragmentCallback) : RecyclerView.Adapter<TvshowAdapter.TvshowViewHolder>() {
+//class TvshowAdapter(private val callback: TvshowFragmentCallback) : RecyclerView.Adapter<TvshowAdapter.TvshowViewHolder>() {
+class TvshowAdapter(private val callback: TvshowFragmentCallback) : PagedListAdapter<TvshowEntity, TvshowAdapter.TvshowViewHolder>(DIFF_CALLBACK) {
 
-    private val listTvshows = ArrayList<TvshowEntity>()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvshowEntity>() {
+            override fun areItemsTheSame(oldItem: TvshowEntity, newItem: TvshowEntity): Boolean {
+                return oldItem.tvshowId == newItem.tvshowId
+            }
 
-    fun setTvshows(tvshows: List<TvshowEntity>?) {
-        if (tvshows == null) return
-        this.listTvshows.clear()
-        this.listTvshows.addAll(tvshows)
+            override fun areContentsTheSame(oldItem: TvshowEntity, newItem: TvshowEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
+
+//    private val listTvshows = ArrayList<TvshowEntity>()
+//
+//    fun setTvshows(tvshows: List<TvshowEntity>?) {
+//        if (tvshows == null) return
+//        this.listTvshows.clear()
+//        this.listTvshows.addAll(tvshows)
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvshowViewHolder {
         val itemsTvshowBinding = ItemsTvshowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,11 +44,15 @@ class TvshowAdapter(private val callback: TvshowFragmentCallback) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: TvshowViewHolder, position: Int) {
-        val tvshow = listTvshows[position]
-        holder.bind(tvshow)
+//        val tvshow = listTvshows[position]
+//        holder.bind(tvshow)
+        val tvshow = getItem(position)
+        if (tvshow != null) {
+            holder.bind(tvshow)
+        }
     }
 
-    override fun getItemCount(): Int = listTvshows.size
+//    override fun getItemCount(): Int = listTvshows.size
 
     inner class TvshowViewHolder(private val binding: ItemsTvshowBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("StringFormatInvalid")

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -12,15 +14,29 @@ import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEn
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ItemsMovieBinding
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailMovieActivity
 
-class MovieAdapter(private val callback: MovieFragmentCallback) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+//class MovieAdapter(private val callback: MovieFragmentCallback) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(private val callback: MovieFragmentCallback) : PagedListAdapter<MovieEntity, MovieAdapter.MovieViewHolder>(DIFF_CALLBACK) {
 
-    private var listMovies = ArrayList<MovieEntity>()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
+            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem.movieId == newItem.movieId
+            }
 
-    fun setMovies(movies: List<MovieEntity>?) {
-        if (movies == null) return
-        this.listMovies.clear()
-        this.listMovies.addAll(movies)
+            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
+
+
+//    private var listMovies = ArrayList<MovieEntity>()
+//
+//    fun setMovies(movies: List<MovieEntity>?) {
+//        if (movies == null) return
+//        this.listMovies.clear()
+//        this.listMovies.addAll(movies)
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val itemsMovieBinding = ItemsMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,11 +44,15 @@ class MovieAdapter(private val callback: MovieFragmentCallback) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = listMovies[position]
-        holder.bind(movie)
+//        val movie = listMovies[position]
+//        holder.bind(movie)
+        val movie = getItem(position)
+        if (movie != null) {
+            holder.bind(movie)
+        }
     }
 
-    override fun getItemCount(): Int = listMovies.size
+//    override fun getItemCount(): Int = listMovies.size
 
     inner class MovieViewHolder(private val binding: ItemsMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("StringFormatInvalid")
