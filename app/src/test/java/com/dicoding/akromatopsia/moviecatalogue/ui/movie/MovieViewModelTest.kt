@@ -3,6 +3,7 @@ package com.dicoding.akromatopsia.moviecatalogue.ui.movie
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
 import com.dicoding.akromatopsia.moviecatalogue.utils.DataDummy
@@ -14,6 +15,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -29,7 +31,10 @@ class MovieViewModelTest {
     private lateinit var movieCatalogueRepository: MovieCatalogueRepository
 
     @Mock
-    private lateinit var observer: Observer<Resource<List<MovieEntity>>>
+    private lateinit var observer: Observer<Resource<PagedList<MovieEntity>>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<MovieEntity>
 
     @Before
     fun setUp() {
@@ -38,8 +43,9 @@ class MovieViewModelTest {
 
     @Test
     fun getMovies() {
-        val dummyMovies = Resource.success(DataDummy.generateDummyMovies())
-        val movies = MutableLiveData<Resource<List<MovieEntity>>>()
+        val dummyMovies = Resource.success(pagedList)
+        `when`(dummyMovies.data?.size).thenReturn(10)
+        val movies = MutableLiveData<Resource<PagedList<MovieEntity>>>()
         movies.value = dummyMovies
 
         Mockito.`when`(movieCatalogueRepository.getAllMovies()).thenReturn(movies)
