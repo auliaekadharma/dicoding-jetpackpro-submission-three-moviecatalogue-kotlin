@@ -9,4 +9,9 @@ import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEn
 class FavoriteMovieViewModel (private val movieCatalogueRepository: MovieCatalogueRepository) : ViewModel() {
 
     fun getFavoriteMovies(): LiveData<PagedList<MovieEntity>> = movieCatalogueRepository.getFavoriteMovies()
+
+    fun setFavoriteMovie(movieEntity: MovieEntity) {
+        val newState = !movieEntity.favorite
+        movieCatalogueRepository.setMovieFavorite(movieEntity, newState)
+    }
 }
