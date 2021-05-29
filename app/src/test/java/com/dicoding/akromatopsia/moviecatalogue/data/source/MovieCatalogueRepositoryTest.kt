@@ -12,8 +12,6 @@ import com.dicoding.akromatopsia.moviecatalogue.utils.DataDummy
 import com.dicoding.akromatopsia.moviecatalogue.utils.LiveDataTestUtil
 import com.dicoding.akromatopsia.moviecatalogue.utils.PagedListUtil
 import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

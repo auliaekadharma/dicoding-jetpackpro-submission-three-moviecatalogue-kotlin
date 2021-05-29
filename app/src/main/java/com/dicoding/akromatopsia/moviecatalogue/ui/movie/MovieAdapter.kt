@@ -14,7 +14,7 @@ import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEn
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ItemsMovieBinding
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailMovieActivity
 
-//class MovieAdapter(private val callback: MovieFragmentCallback) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+
 class MovieAdapter(private val callback: MovieFragmentCallback) : PagedListAdapter<MovieEntity, MovieAdapter.MovieViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -29,30 +29,17 @@ class MovieAdapter(private val callback: MovieFragmentCallback) : PagedListAdapt
         }
     }
 
-
-//    private var listMovies = ArrayList<MovieEntity>()
-//
-//    fun setMovies(movies: List<MovieEntity>?) {
-//        if (movies == null) return
-//        this.listMovies.clear()
-//        this.listMovies.addAll(movies)
-//    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val itemsMovieBinding = ItemsMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieViewHolder(itemsMovieBinding)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-//        val movie = listMovies[position]
-//        holder.bind(movie)
         val movie = getItem(position)
         if (movie != null) {
             holder.bind(movie)
         }
     }
-
-//    override fun getItemCount(): Int = listMovies.size
 
     inner class MovieViewHolder(private val binding: ItemsMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("StringFormatInvalid")

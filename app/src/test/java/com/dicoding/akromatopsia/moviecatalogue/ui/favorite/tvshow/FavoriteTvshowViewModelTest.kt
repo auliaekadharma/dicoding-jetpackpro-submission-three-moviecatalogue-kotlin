@@ -5,14 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
-import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
-import com.dicoding.akromatopsia.moviecatalogue.ui.favorite.movie.FavoriteMovieViewModel
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito

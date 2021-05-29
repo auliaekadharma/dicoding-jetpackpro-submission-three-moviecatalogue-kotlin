@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
-import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
+import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 
 class DetailTvshowViewModel (private val movieCatalogueRepository: MovieCatalogueRepository) : ViewModel() {
     val tvshowId = MutableLiveData<String>()
@@ -27,6 +26,4 @@ class DetailTvshowViewModel (private val movieCatalogueRepository: MovieCatalogu
         }
     }
 
-
-    //fun getTvshow() : LiveData<List<TvshowEntity>> = movieCatalogueRepository.getAllTvshows()
 }

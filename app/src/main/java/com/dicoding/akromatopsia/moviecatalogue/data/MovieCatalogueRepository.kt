@@ -1,7 +1,6 @@
 package com.dicoding.akromatopsia.moviecatalogue.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.LocalDataSource

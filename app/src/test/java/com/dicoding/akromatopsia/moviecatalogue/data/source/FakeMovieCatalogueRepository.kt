@@ -1,11 +1,9 @@
 package com.dicoding.akromatopsia.moviecatalogue.data.source
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueDataSource
-import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
 import com.dicoding.akromatopsia.moviecatalogue.data.NetworkBoundResource
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.LocalDataSource
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity

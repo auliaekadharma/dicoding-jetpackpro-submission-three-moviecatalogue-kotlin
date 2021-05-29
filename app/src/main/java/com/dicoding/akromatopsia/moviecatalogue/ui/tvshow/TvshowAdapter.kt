@@ -10,12 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dicoding.akromatopsia.moviecatalogue.R
-import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ItemsTvshowBinding
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailTvshowActivity
 
-//class TvshowAdapter(private val callback: TvshowFragmentCallback) : RecyclerView.Adapter<TvshowAdapter.TvshowViewHolder>() {
+
 class TvshowAdapter(private val callback: TvshowFragmentCallback) : PagedListAdapter<TvshowEntity, TvshowAdapter.TvshowViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -30,29 +29,17 @@ class TvshowAdapter(private val callback: TvshowFragmentCallback) : PagedListAda
         }
     }
 
-//    private val listTvshows = ArrayList<TvshowEntity>()
-//
-//    fun setTvshows(tvshows: List<TvshowEntity>?) {
-//        if (tvshows == null) return
-//        this.listTvshows.clear()
-//        this.listTvshows.addAll(tvshows)
-//    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvshowViewHolder {
         val itemsTvshowBinding = ItemsTvshowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TvshowViewHolder(itemsTvshowBinding)
     }
 
     override fun onBindViewHolder(holder: TvshowViewHolder, position: Int) {
-//        val tvshow = listTvshows[position]
-//        holder.bind(tvshow)
         val tvshow = getItem(position)
         if (tvshow != null) {
             holder.bind(tvshow)
         }
     }
-
-//    override fun getItemCount(): Int = listTvshows.size
 
     inner class TvshowViewHolder(private val binding: ItemsTvshowBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("StringFormatInvalid")

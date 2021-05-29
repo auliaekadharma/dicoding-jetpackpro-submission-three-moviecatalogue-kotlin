@@ -3,7 +3,6 @@ package com.dicoding.akromatopsia.moviecatalogue.ui.detail
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -16,8 +15,6 @@ import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEn
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ActivityDetailMovieBinding
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ContentDetailMovieBinding
 import com.dicoding.akromatopsia.moviecatalogue.viewmodel.ViewModelFactory
-import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
-import com.dicoding.akromatopsia.moviecatalogue.vo.Status
 
 class DetailMovieActivity : AppCompatActivity() {
 

@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
-import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
+import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 
 class DetailMovieViewModel (private val movieCatalogueRepository: MovieCatalogueRepository) : ViewModel() {
     val movieId = MutableLiveData<String>()
@@ -27,7 +26,5 @@ class DetailMovieViewModel (private val movieCatalogueRepository: MovieCatalogue
             movieCatalogueRepository.setMovieFavorite(movieEntity, newState)
         }
     }
-
-    //fun getMovie() : LiveData<List<MovieEntity>> = movieCatalogueRepository.getAllMovies()
 
 }

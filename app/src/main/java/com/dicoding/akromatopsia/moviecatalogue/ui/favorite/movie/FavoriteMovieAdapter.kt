@@ -13,7 +13,7 @@ import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEn
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ItemsMovieBinding
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailMovieActivity
 
-//class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieViewHolder>(){
+
 class FavoriteMovieAdapter : PagedListAdapter<MovieEntity, FavoriteMovieAdapter.FavoriteMovieViewHolder>(DIFF_CALLBACK){
 
     companion object {
@@ -29,29 +29,17 @@ class FavoriteMovieAdapter : PagedListAdapter<MovieEntity, FavoriteMovieAdapter.
         }
     }
 
-//    private var listMovies = ArrayList<MovieEntity>()
-//
-//    fun setMovies(movies: List<MovieEntity>?) {
-//        if (movies == null) return
-//        this.listMovies.clear()
-//        this.listMovies.addAll(movies)
-//    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMovieViewHolder {
         val itemsMovieBinding = ItemsMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FavoriteMovieViewHolder(itemsMovieBinding)
     }
 
     override fun onBindViewHolder(holder: FavoriteMovieViewHolder, position: Int) {
-//        val movie = listMovies[position]
-//        holder.bind(movie)
         val movie = getItem(position)
         if (movie != null) {
             holder.bind(movie)
         }
     }
-
-//    override fun getItemCount(): Int = listMovies.size
 
     fun getSwipeData(swipedPosition: Int): MovieEntity? = getItem(swipedPosition)
 

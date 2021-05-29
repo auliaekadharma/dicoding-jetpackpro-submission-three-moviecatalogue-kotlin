@@ -5,7 +5,6 @@ import androidx.paging.DataSource
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.MovieEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.source.local.room.MovieCatalogueDao
-import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
 
 class LocalDataSource private constructor(private val mMovieCatalogueDao: MovieCatalogueDao) {
 

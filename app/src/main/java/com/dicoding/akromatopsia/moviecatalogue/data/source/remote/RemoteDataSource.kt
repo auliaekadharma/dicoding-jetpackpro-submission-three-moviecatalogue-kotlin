@@ -1,6 +1,5 @@
 package com.dicoding.akromatopsia.moviecatalogue.data.source.remote
 
-import android.graphics.Movie
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData

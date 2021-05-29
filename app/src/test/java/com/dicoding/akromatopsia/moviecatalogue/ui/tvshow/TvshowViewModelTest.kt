@@ -4,9 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.data.MovieCatalogueRepository
-import com.dicoding.akromatopsia.moviecatalogue.utils.DataDummy
+import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowEntity
 import com.dicoding.akromatopsia.moviecatalogue.vo.Resource
 import org.junit.Assert
 import org.junit.Before
@@ -14,7 +13,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
@@ -48,7 +46,7 @@ class TvshowViewModelTest {
         val tvshows = MutableLiveData<Resource<PagedList<TvshowEntity>>>()
         tvshows.value = dummyTvshows
 
-        Mockito.`when`(movieCatalogueRepository.getAllTvshows()).thenReturn(tvshows)
+        `when`(movieCatalogueRepository.getAllTvshows()).thenReturn(tvshows)
         val tvshowEntities = viewModel.getTvshows().value?.data
         verify(movieCatalogueRepository).getAllTvshows()
         Assert.assertNotNull(tvshowEntities)

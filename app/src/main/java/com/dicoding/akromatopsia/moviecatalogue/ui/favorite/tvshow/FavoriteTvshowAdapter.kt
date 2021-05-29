@@ -13,7 +13,7 @@ import com.dicoding.akromatopsia.moviecatalogue.data.source.local.entity.TvshowE
 import com.dicoding.akromatopsia.moviecatalogue.databinding.ItemsTvshowBinding
 import com.dicoding.akromatopsia.moviecatalogue.ui.detail.DetailTvshowActivity
 
-//class FavoriteTvshowAdapter : RecyclerView.Adapter<FavoriteTvshowAdapter.FavoriteTvshowViewHolder>() {
+
 class FavoriteTvshowAdapter : PagedListAdapter<TvshowEntity, FavoriteTvshowAdapter.FavoriteTvshowViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -29,29 +29,17 @@ class FavoriteTvshowAdapter : PagedListAdapter<TvshowEntity, FavoriteTvshowAdapt
         }
     }
 
-//    private var listTvshows = ArrayList<TvshowEntity>()
-//
-//    fun setTvshows(tvshows: List<TvshowEntity>?) {
-//        if (tvshows == null) return
-//        this.listTvshows.clear()
-//        this.listTvshows.addAll(tvshows)
-//    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteTvshowViewHolder {
         val itemsTvshowBinding = ItemsTvshowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FavoriteTvshowViewHolder(itemsTvshowBinding)
     }
 
     override fun onBindViewHolder(holder: FavoriteTvshowViewHolder, position: Int) {
-//        val tvshow = listTvshows[position]
-//        holder.bind(tvshow)
         val tvshow = getItem(position)
         if (tvshow != null) {
             holder.bind(tvshow)
         }
     }
-
-//    override fun getItemCount(): Int = listTvshows.size
 
     fun getSwipeData(swipedPosition: Int): TvshowEntity? = getItem(swipedPosition)
 
